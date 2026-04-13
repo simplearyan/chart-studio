@@ -37,10 +37,12 @@ body {
 }
 
 .studio-header {
-    height: 60px;
-    background-color: rgba(26, 29, 39, 0.8);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-color);
+    height: 56px;
+    background-color: rgba(15, 17, 26, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -51,15 +53,18 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: -0.02em;
-    color: #fff;
+    gap: 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(255,255,255,0.1);
 }
 
 .logo svg {
     color: var(--accent-primary);
+    filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.6));
 }
 
 .header-actions {
@@ -443,5 +448,23 @@ input[type=range]::-webkit-slider-thumb {
     
     .canvas-container {
         padding: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .studio-header {
+        padding: 0 12px;
+    }
+    
+    .header-actions .btn-text {
+        display: none;
+    }
+    
+    .header-actions .btn {
+        padding: 10px 12px;
+    }
+    
+    .logo {
+        font-size: 1rem;
     }
 }
