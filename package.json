@@ -1,0 +1,19 @@
+{
+  "name": "chart-studio-web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^8.0.4"
+  },
+  "dependencies": {
+    "downloadjs": "^1.4.7",
+    "html-to-image": "^1.11.13",
+    "mediabunny": "^1.40.1"
+  }
+}

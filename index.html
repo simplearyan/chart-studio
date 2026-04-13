@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chart Studio Web</title>
+    <!-- Use Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div id="app" class="studio-layout">
+        <header class="studio-header">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                <span>Chart Studio</span>
+            </div>
+            <div class="header-actions">
+                <button id="btn-export-png" class="btn btn-secondary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    Image
+                </button>
+                <button id="btn-export-video" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Export Video
+                </button>
+            </div>
+        </header>
+
+        <main class="studio-main">
+            <!-- Left Panel -->
+            <aside class="sidebar left-sidebar">
+                <div class="panel-section">
+                    <h3>Chart Type</h3>
+                    <div class="chart-type-selector">
+                        <button class="type-btn active" data-type="bar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                            Bar
+                        </button>
+                        <button class="type-btn" data-type="line">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                            Line
+                        </button>
+                        <button class="type-btn" data-type="race">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2Z"/><path d="M12 6v12"/><path d="M8 10v8"/><path d="M16 14v4"/></svg>
+                            Race
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>Data (JSON)</h3>
+                    <textarea id="data-input" class="code-editor">[
+    {"label": "A", "val": 10},
+    {"label": "B", "val": 20},
+    {"label": "C", "val": 45},
+    {"label": "D", "val": 30}
+]</textarea>
+                    <button id="btn-update-data" class="btn btn-secondary w-full mt-2">Update Data</button>
+                </div>
+            </aside>
+
+            <!-- Center View -->
+            <section class="canvas-workspace">
+                <div id="canvas-container" class="canvas-container shadow-premium">
+                    <canvas id="main-canvas" width="1280" height="720"></canvas>
+                </div>
+
+                <div class="playback-controls">
+                    <button id="btn-play" class="control-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    </button>
+                    <div class="timeline-scrubber">
+                        <input type="range" id="timeline-slider" min="0" max="100" value="0">
+                        <div class="time-display"><span id="time-current">0.0</span>s / <span id="time-total">5.0</span>s</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel -->
+            <aside class="sidebar right-sidebar">
+                <div class="panel-section">
+                    <h3>Configuration</h3>
+                    
+                    <div class="control-group">
+                        <label>Color Palette</label>
+                        <div class="color-palette">
+                            <button class="palette-swatch active" style="background: linear-gradient(135deg, #a855f7, #6366f1)" data-palette="purple-indigo"></button>
+                            <button class="palette-swatch" style="background: linear-gradient(135deg, #ec4899, #f43f5e)" data-palette="pink-rose"></button>
+                            <button class="palette-swatch" style="background: linear-gradient(135deg, #10b981, #3b82f6)" data-palette="emerald-blue"></button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="conf-duration">Duration (s)</label>
+                        <input type="number" id="conf-duration" value="5" min="1" max="60" class="input-field">
+                    </div>
+
+                    <div class="control-group">
+                        <label for="conf-easing">Easing</label>
+                        <select id="conf-easing" class="select-field">
+                            <option value="easeInOutCubic">Ease In Out</option>
+                            <option value="easeOutElastic">Elastic Out</option>
+                            <option value="easeOutBounce">Bounce</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>Export Settings</h3>
+                    <div class="control-group">
+                        <label>Format</label>
+                        <select id="export-format" class="select-field">
+                            <option value="webm">WebM (VP9)</option>
+                            <option value="mp4">MP4 (H.264)</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>FPS</label>
+                        <select id="export-fps" class="select-field">
+                            <option value="30">30 FPS</option>
+                            <option value="60" selected>60 FPS</option>
+                        </select>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Export Overlay -->
+    <div id="export-overlay" class="export-overlay hidden">
+        <div class="export-modal glass-panel">
+            <h2>Rendering Video...</h2>
+            <div class="progress-bar-container">
+                <div id="export-progress-bar" class="progress-bar"></div>
+            </div>
+            <p id="export-status">Preparing frames...</p>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
