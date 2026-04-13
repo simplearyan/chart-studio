@@ -67,39 +67,56 @@ body {
     gap: 12px;
 }
 
-.studio-main {
+.studio-workspace {
     display: flex;
     flex: 1;
     overflow: hidden;
 }
 
-/* Sidebars */
-.sidebar {
-    width: 280px;
+/* Unified Sidebar */
+.unified-sidebar {
+    width: 360px;
     background-color: var(--bg-secondary);
-    border-right: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    flex-shrink: 0;
 }
 
-.sidebar.right-sidebar {
-    border-right: none;
-    border-left: 1px solid var(--border-color);
-}
-
-.panel-section {
-    padding: 24px 20px;
+/* Accordion Specifics */
+details.accordion {
     border-bottom: 1px solid var(--border-color);
 }
 
-.panel-section h3 {
-    font-size: 0.75rem;
+details.accordion summary {
+    padding: 20px 24px;
+    font-weight: 700;
+    font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--text-secondary);
-    margin-bottom: 16px;
-    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: rgba(255,255,255,0.01);
+    transition: all 0.2s;
+}
+
+details.accordion summary:hover {
+    background-color: rgba(255,255,255,0.04);
+    color: var(--text-primary);
+}
+
+details.accordion summary::-webkit-details-marker {
+    display: none;
+}
+
+.accordion-content {
+    padding: 24px;
+    background-color: var(--bg-secondary);
 }
 
 /* UI Controls */
@@ -108,10 +125,10 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 8px 16px;
+    padding: 10px 16px;
     border-radius: var(--radius-sm);
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     border: none;
@@ -127,16 +144,17 @@ body {
 .btn-primary:hover {
     background-color: var(--accent-hover);
     transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
 }
 
 .btn-secondary {
-    background-color: var(--bg-panel);
+    background-color: rgba(255, 255, 255, 0.05); /* Softer secondary */
     color: var(--text-primary);
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .btn-secondary:hover {
-    background-color: #2e3444;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .w-full {
@@ -144,7 +162,7 @@ body {
 }
 
 .mt-2 {
-    margin-top: 8px;
+    margin-top: 12px;
 }
 
 /* Chart Type Selector */
@@ -247,7 +265,7 @@ body {
 }
 
 /* Center Canvas Workspace */
-.canvas-workspace {
+.canvas-panel {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -405,29 +423,22 @@ input[type=range]::-webkit-slider-thumb {
 
 /* Responsive Overrides */
 @media (max-width: 1024px) {
-    .studio-main {
+    .studio-workspace {
         flex-direction: column;
         overflow-y: auto;
     }
     
-    .sidebar {
+    .unified-sidebar {
         width: 100%;
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
-        max-height: none;
-        overflow: visible;
-    }
-    
-    .sidebar.right-sidebar {
         border-left: none;
-        border-bottom: none;
         border-top: 1px solid var(--border-color);
+        flex-shrink: 0;
     }
     
-    .canvas-workspace {
+    .canvas-panel {
         flex: none;
-        height: 60vh;
-        min-height: 400px;
+        height: 50vh;
+        min-height: 350px;
     }
     
     .canvas-container {
