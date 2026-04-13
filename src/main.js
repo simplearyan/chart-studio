@@ -1,9 +1,15 @@
 import { Engine } from './engine/Core.js';
 import { ChartObject } from './engine/ChartObject.js';
-import { toPng } from 'html-to-image';
-import download from 'downloadjs';
 
-// Setup Worker
+function nativeDownload(url, filename) {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
 // We use ?worker to let Vite know this is a Web Worker
 import MediaWorker from './workers/mediabunny.worker.js?worker';
 
@@ -42,8 +48,16 @@ const btnExportVideo = document.getElementById('btn-export-video');
 const exportOverlay = document.getElementById('export-overlay');
 const exportProgressBar = document.getElementById('export-progress-bar');
 const exportStatus = document.getElementById('export-status');
-const selFormat = document.getElementById('export-format');
-const selFps = document.getElementById('export-fps');
+
+const formatBtns = document.querySelectorAll('.format-btn');
+const processBtns = document.querySelectorAll('.process-btn');
+const fpsBtns = document.querySelectorAll('.fps-btn');
+
+let exportState = {
+    format: 'mp4',
+    process: 'render',
+    fps: 60
+};
 
 function init() {
     engine = new Engine(canvasEl);
@@ -143,31 +157,120 @@ function bindEvents() {
     });
 
     btnExportPng.addEventListener('click', async () => {
-        // We can just use canvas instead of html-to-image since it's all canvas
         const dataUrl = canvasEl.toDataURL('image/png');
-        download(dataUrl, 'chart-export.png');
+        nativeDownload(dataUrl, 'chart-export.png');
     });
+
+    // Export Toggles
+    formatBtns.forEach(btn => btn.addEventListener('click', () => {
+        formatBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        exportState.format = btn.dataset.value;
+    }));
+
+    processBtns.forEach(btn => btn.addEventListener('click', () => {
+        processBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        exportState.process = btn.dataset.value;
+    }));
+
+    fpsBtns.forEach(btn => btn.addEventListener('click', () => {
+        fpsBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        exportState.fps = Number(btn.dataset.value);
+    }));
 
     btnExportVideo.addEventListener('click', handleExportVideo);
 }
 
-// ---- VIDEO EXPORT LOGIC USING MEDIABUNNY ----
+// ---- VIDEO EXPORT LOGIC ----
 function handleExportVideo() {
     exportOverlay.classList.remove('hidden');
     exportProgressBar.style.width = '0%';
-    exportStatus.innerText = 'Initializing Web Worker...';
     
-    // Stop engine
     engine.pause();
     engine.seek(0);
     
+    if (exportState.process === 'record') {
+        runRecordMode();
+    } else {
+        runRenderMode();
+    }
+}
+
+function getMimeType(format) {
+    if (format === 'mp4') return typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported('video/mp4') ? 'video/mp4' : null;
+    if (format === 'mov') return typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported('video/quicktime') ? 'video/quicktime' : null;
+    return 'video/webm;codecs=vp9';
+}
+
+function runRecordMode() {
+    const fps = exportState.fps;
+    const format = exportState.format;
+    
+    let mimeType = getMimeType(format);
+    
+    if (!mimeType && format !== 'webm') {
+        alert(`UI Error: Your browser doesn't natively support recording to .${format}. Falling back to .webm for Record mode. (Use Render mode for guaranteed formats).`);
+        mimeType = 'video/webm;codecs=vp9';
+    }
+
+    exportStatus.innerText = 'Recording Realtime Stream...';
+    const stream = canvasEl.captureStream(fps);
+    const recorder = new MediaRecorder(stream, { mimeType: mimeType });
+    const chunks = [];
+    
+    recorder.ondataavailable = e => {
+        if (e.data.size > 0) chunks.push(e.data);
+    };
+    
+    let recordingProgressInterval;
+    
+    recorder.onstop = () => {
+        clearInterval(recordingProgressInterval);
+        exportProgressBar.style.width = `100%`;
+        exportStatus.innerText = 'Success! Downloading...';
+        
+        const outputExt = mimeType.includes('mp4') ? 'mp4' : mimeType.includes('quicktime') ? 'mov' : 'webm';
+        const blob = new Blob(chunks, { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        nativeDownload(url, `chart-record-fast.${outputExt}`);
+        
+        setTimeout(() => {
+            exportOverlay.classList.add('hidden');
+            engine.seek(0);
+        }, 1000);
+    };
+    
+    recorder.start();
+    engine.seek(0);
+    engine.play();
+    
+    recordingProgressInterval = setInterval(() => {
+        const progress = Math.min((engine.time / engine.totalDuration) * 100, 100);
+        exportProgressBar.style.width = `${progress}%`;
+    }, 100);
+    
+    const stopListener = () => {
+        recorder.stop();
+        window.removeEventListener('engine:ended', stopListener);
+    };
+    window.addEventListener('engine:ended', stopListener);
+}
+
+function runRenderMode() {
+    exportStatus.innerText = 'Initializing Web Worker...';
+    
     const worker = new MediaWorker();
-    const fps = Number(selFps.value);
-    const format = selFormat.value;
+    const fps = exportState.fps;
+    const format = exportState.format;
     const duration = engine.totalDuration;
     const totalFrames = Math.floor((duration / 1000) * fps);
     const dt = 1000 / fps;
     const microDtMs = 1000000 / fps; // microseconds
+
+    let currentFrame = 0;
+    let pendingFrames = 0;
 
     worker.onmessage = async (e) => {
         const { type, data, message, error } = e.data;
@@ -175,35 +278,32 @@ function handleExportVideo() {
         if (type === 'READY') {
             exportStatus.innerText = 'Encoding Frames...';
             // Start pushing frames
-            let currentFrame = 0;
             
-            // Push frames sequentially to avoid OOM
             const pushNextBatch = async () => {
-                const BATCH_SIZE = 30; // Max pending frames
-                
                 while (currentFrame < totalFrames) {
-                    // Simple throttle
-                    if (currentFrame % BATCH_SIZE === 0 && currentFrame > 0) {
-                        // wait a bit for worker to catch up
-                        await new Promise(r => setTimeout(r, 50));
+                    if (pendingFrames > 15) {
+                        await new Promise(r => setTimeout(r, 20));
+                        continue;
                     }
                     
                     const timeMs = currentFrame * dt;
                     engine.seek(timeMs);
                     
                     const bitmap = await createImageBitmap(canvasEl);
-                    const timestampObj = currentFrame * microDtMs; 
+                    const timestampObj = Math.round(currentFrame * microDtMs); 
+                    const durationObj = Math.round(microDtMs);
                     
                     worker.postMessage({
                         type: 'ENCODE_FRAME',
                         data: {
                             bitmap,
                             timestamp: timestampObj,
-                            duration: microDtMs
+                            duration: durationObj
                         }
                     }, [bitmap]);
                     
                     currentFrame++;
+                    pendingFrames++;
                     
                     // UI
                     const progress = (currentFrame / totalFrames) * 90; // Up to 90%
@@ -220,9 +320,13 @@ function handleExportVideo() {
             exportProgressBar.style.width = `100%`;
             exportStatus.innerText = 'Success! Downloading...';
             
-            const blob = new Blob([data], { type: format === 'mp4' ? 'video/mp4' : 'video/webm' });
+            let mimeType = 'video/webm';
+            if (format === 'mp4') mimeType = 'video/mp4';
+            if (format === 'mov') mimeType = 'video/quicktime';
+            
+            const blob = new Blob([data], { type: mimeType });
             const url = URL.createObjectURL(blob);
-            download(url, `chart-video.${format}`);
+            nativeDownload(url, `chart-video.${format}`);
             
             setTimeout(() => {
                 exportOverlay.classList.add('hidden');
@@ -233,6 +337,8 @@ function handleExportVideo() {
             alert('Export Failed: ' + error);
             exportOverlay.classList.add('hidden');
             worker.terminate();
+        } else if (type === 'FRAME_DONE') {
+            pendingFrames--;
         }
     };
 

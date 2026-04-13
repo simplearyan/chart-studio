@@ -1,0 +1,157 @@
+/* Export Panel Enhancements */
+.font-bold { font-weight: 700; }
+.text-xs { font-size: 0.75rem; letter-spacing: 0.05em; color: var(--text-secondary); text-transform: uppercase; }
+.mt-2 { margin-top: 8px; }
+.d-block { display: block; }
+.cursor-pointer { cursor: pointer; }
+
+/* Grid systems */
+.format-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.fps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-top: 8px;
+}
+
+/* Base toggle button */
+.toggle-btn {
+    background-color: var(--bg-panel);
+    border: 2px solid var(--border-color);
+    color: var(--text-secondary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    padding: 12px;
+}
+
+.toggle-btn:hover {
+    border-color: #475569;
+    color: var(--text-primary);
+}
+
+.toggle-btn.active {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: #fff;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Format specifics */
+.format-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.format-btn span {
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.format-btn.active::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(45deg);
+}
+
+/* Process specifics */
+.process-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+    gap: 4px;
+}
+
+.process-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: inherit;
+    margin-top: 4px;
+}
+
+.process-sub {
+    font-size: 0.65rem;
+    opacity: 0.7;
+}
+
+/* Active Process Glows */
+.process-render.active {
+    background-color: rgba(139, 92, 246, 0.1);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+}
+
+.process-record.active {
+    background-color: rgba(249, 115, 22, 0.1);
+    border-color: #f97316;
+    color: #f97316;
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.2);
+}
+
+.process-btn.active::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+}
+
+/* Advanced options */
+.advanced-options {
+    background-color: rgba(0,0,0,0.1);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    margin-top: 16px;
+}
+
+.advanced-options summary {
+    outline: none;
+    user-select: none;
+    color: var(--text-secondary);
+}
+
+.advanced-options summary:hover {
+    color: var(--text-primary);
+}
+
+.fps-btn {
+    padding: 8px 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.fps-btn.active {
+    background-color: #fff;
+    color: #000;
+    border-color: #fff;
+}

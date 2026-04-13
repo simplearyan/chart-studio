@@ -3,6 +3,7 @@ import {
     BufferTarget,
     Mp4OutputFormat,
     WebMOutputFormat,
+    MovOutputFormat,
     VideoSampleSource,
     VideoSample
 } from 'mediabunny';
@@ -82,6 +83,7 @@ self.onmessage = async (e) => {
 
             let format;
             if (config.format === 'webm') format = new WebMOutputFormat();
+            else if (config.format === 'mov') format = new MovOutputFormat();
             else format = new Mp4OutputFormat();
 
             output = new Output({
