@@ -234,7 +234,11 @@ function runRecordMode() {
         const outputExt = mimeType.includes('mp4') ? 'mp4' : mimeType.includes('quicktime') ? 'mov' : 'webm';
         const blob = new Blob(chunks, { type: mimeType });
         const url = URL.createObjectURL(blob);
-        nativeDownload(url, `chart-record-fast.${outputExt}`);
+        
+        const now = new Date();
+        const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}-${String(now.getMinutes()).padStart(2,'0')}-${String(now.getSeconds()).padStart(2,'0')}`;
+        
+        nativeDownload(url, `chart-record-${fps}fps-${dateStr}.${outputExt}`);
         
         setTimeout(() => {
             exportOverlay.classList.add('hidden');
@@ -326,7 +330,11 @@ function runRenderMode() {
             
             const blob = new Blob([data], { type: mimeType });
             const url = URL.createObjectURL(blob);
-            nativeDownload(url, `chart-video.${format}`);
+            
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}-${String(now.getMinutes()).padStart(2,'0')}-${String(now.getSeconds()).padStart(2,'0')}`;
+            
+            nativeDownload(url, `chart-render-${fps}fps-${dateStr}.${format}`);
             
             setTimeout(() => {
                 exportOverlay.classList.add('hidden');
