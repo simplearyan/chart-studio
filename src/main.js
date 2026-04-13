@@ -238,7 +238,7 @@ function runRecordMode() {
         const now = new Date();
         const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}-${String(now.getMinutes()).padStart(2,'0')}-${String(now.getSeconds()).padStart(2,'0')}`;
         
-        nativeDownload(url, `chart-record-${fps}fps-${dateStr}.${outputExt}`);
+        nativeDownload(url, `chart-[record]-[${fps}fps]-[${outputExt.toUpperCase()}]-[${dateStr}].${outputExt}`);
         
         setTimeout(() => {
             exportOverlay.classList.add('hidden');
@@ -334,7 +334,7 @@ function runRenderMode() {
             const now = new Date();
             const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}-${String(now.getMinutes()).padStart(2,'0')}-${String(now.getSeconds()).padStart(2,'0')}`;
             
-            nativeDownload(url, `chart-render-${fps}fps-${dateStr}.${format}`);
+            nativeDownload(url, `chart-[render]-[${fps}fps]-[${format.toUpperCase()}]-[${dateStr}].${format}`);
             
             setTimeout(() => {
                 exportOverlay.classList.add('hidden');
