@@ -319,7 +319,6 @@ details.accordion summary::-webkit-details-marker {
     max-height: 100%;
     object-fit: contain;
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-premium);
 }
 
 /* Playback Controls */

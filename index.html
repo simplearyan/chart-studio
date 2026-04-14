@@ -162,6 +162,25 @@
                         </div>
                     </div>
                 </details>
+
+                <details class="accordion" name="sidebar-group">
+                    <summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><circle cx="12" cy="12" r="3"/></svg> Canvas Settings</summary>
+                    <div class="accordion-content">
+                        <div class="control-group">
+                            <label class="font-bold text-xs uppercase tracking-wider opacity-60">Workspace Background</label>
+                            <div class="color-palette mt-2" id="canvas-color-palette">
+                                <div class="palette-swatch active" style="background-color: #282828;" data-color="#282828" title="Grey"></div>
+                                <div class="palette-swatch" style="background-color: #334155;" data-color="#334155" title="Slate"></div>
+                                <div class="palette-swatch" style="background-color: #064e3b;" data-color="#064e3b" title="Green"></div>
+                                <div class="palette-swatch" style="background-color: #172554;" data-color="#172554" title="Blue"></div>
+                                <div class="palette-swatch" style="background-color: #422006;" data-color="#422006" title="Yellow"></div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="font-bold text-xs uppercase tracking-wider opacity-60">Custom Color</label>
+                            <input type="color" id="canvas-custom-color" class="w-full h-10 bg-transparent border-none cursor-pointer mt-2" value="#282828">
+                        </div>
+                    </div>
             </aside>
         </main>
 

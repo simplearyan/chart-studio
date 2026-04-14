@@ -28,6 +28,7 @@ let chartObj;
 // DOM Elements
 const canvasEl = document.getElementById('main-canvas');
 const containerEl = document.getElementById('canvas-container');
+const canvasPanel = document.querySelector('.canvas-panel');
 
 // Controls
 const btnPlay = document.getElementById('btn-play');
@@ -53,6 +54,9 @@ const exportStatus = document.getElementById('export-status');
 const formatBtns = document.querySelectorAll('.format-btn');
 const processBtns = document.querySelectorAll('.process-btn');
 const fpsBtns = document.querySelectorAll('.fps-btn');
+
+const canvasSwatches = document.querySelectorAll('#canvas-color-palette .palette-swatch');
+const canvasCustomPicker = document.getElementById('canvas-custom-color');
 
 let exportState = {
     format: 'mp4',
@@ -224,6 +228,21 @@ function bindEvents() {
         btn.classList.add('active');
         exportState.fps = Number(btn.dataset.value);
     }));
+
+    // Canvas Background logic
+    canvasSwatches.forEach(swatch => swatch.addEventListener('click', () => {
+        canvasSwatches.forEach(s => s.classList.remove('active'));
+        swatch.classList.add('active');
+        const color = swatch.dataset.color;
+        canvasPanel.style.backgroundColor = color;
+        canvasCustomPicker.value = color;
+    }));
+
+    canvasCustomPicker.addEventListener('input', (e) => {
+        const color = e.target.value;
+        canvasPanel.style.backgroundColor = color;
+        canvasSwatches.forEach(s => s.classList.remove('active'));
+    });
 
     btnExportVideo.addEventListener('click', handleExportVideo);
 }
