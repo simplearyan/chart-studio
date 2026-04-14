@@ -15,6 +15,10 @@
     --shadow-premium: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(139, 92, 246, 0.1);
 }
 
+.hidden { display: none !important; }
+.w-full { width: 100%; }
+.mt-2 { margin-top: 8px; }
+
 * {
     box-sizing: border-box;
     margin: 0;

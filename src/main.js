@@ -195,7 +195,29 @@ function bindEvents() {
         processBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         exportState.process = btn.dataset.value;
+        updateFormatVisibility();
     }));
+
+    function updateFormatVisibility() {
+        const isLive = exportState.process === 'record';
+        formatBtns.forEach(btn => {
+            const format = btn.dataset.value;
+            const isSupported = !isLive || (format !== 'mov' && format !== 'png_sequence');
+            
+            if (isSupported) {
+                btn.classList.remove('hidden');
+            } else {
+                btn.classList.add('hidden');
+                // Auto-correct if hiding the currently selected format
+                if (exportState.format === format) {
+                    formatBtns[0].click(); // Revert to MP4
+                }
+            }
+        });
+    }
+
+    // Initial run
+    updateFormatVisibility();
 
     fpsBtns.forEach(btn => btn.addEventListener('click', () => {
         fpsBtns.forEach(b => b.classList.remove('active'));
