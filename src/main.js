@@ -12,6 +12,7 @@ function nativeDownload(url, filename) {
 
 // We use ?worker to let Vite know this is a Web Worker
 import MediaWorker from './workers/mediabunny.worker.js?worker';
+import ZipWorker from './workers/zip.worker.js?worker';
 
 const appState = {
     chartType: 'bar',
@@ -276,7 +277,8 @@ function runRecordMode() {
 function runRenderMode() {
     exportStatus.innerText = 'Initializing Web Worker...';
     
-    const worker = new MediaWorker();
+    const isPngSeq = exportState.format === 'png_sequence';
+    const worker = isPngSeq ? new ZipWorker() : new MediaWorker();
     const fps = exportState.fps;
     const format = exportState.format;
     const duration = engine.totalDuration;
@@ -289,9 +291,11 @@ function runRenderMode() {
 
     worker.onmessage = async (e) => {
         const { type, data, message, error } = e.data;
+        
+        if (message) console.log("[Worker]", message);
 
         if (type === 'READY') {
-            exportStatus.innerText = 'Encoding Frames...';
+            exportStatus.innerText = isPngSeq ? 'Capturing PNGs...' : 'Encoding Frames...';
             // Start pushing frames
             
             const pushNextBatch = async () => {
@@ -326,7 +330,7 @@ function runRenderMode() {
                 }
                 
                 // Done
-                exportStatus.innerText = 'Finalizing stream...';
+                exportStatus.innerText = isPngSeq ? 'Generating ZIP...' : 'Finalizing stream...';
                 worker.postMessage({ type: 'FINALIZE' });
             };
             
@@ -338,15 +342,19 @@ function runRenderMode() {
             let mimeType = 'video/webm';
             if (format === 'mp4') mimeType = 'video/mp4';
             if (format === 'mov') mimeType = 'video/quicktime';
+            if (isPngSeq) mimeType = 'application/zip';
             
-            const blob = new Blob([data], { type: mimeType });
+            const blob = data instanceof Blob ? data : new Blob([data], { type: mimeType });
             const url = URL.createObjectURL(blob);
             
             const now = new Date();
             const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}-${String(now.getMinutes()).padStart(2,'0')}`;
             const durSecs = Math.round(engine.totalDuration / 1000);
             
-            nativeDownload(url, `chart-[render]-[${durSecs}s]-[${fps}fps]-[${format.toUpperCase()}]-[${dateStr}].${format}`);
+            const finalFormat = isPngSeq ? 'zip' : format;
+            const formatDisplay = isPngSeq ? 'PNG_SEQ' : format.toUpperCase();
+
+            nativeDownload(url, `chart-[render]-[${durSecs}s]-[${fps}fps]-[${formatDisplay}]-[${dateStr}].${finalFormat}`);
             
             setTimeout(() => {
                 exportOverlay.classList.add('hidden');
