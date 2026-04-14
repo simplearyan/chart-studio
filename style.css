@@ -1,18 +1,18 @@
 :root {
-    --bg-primary: #0f111a;
-    --bg-secondary: #1a1d27;
-    --bg-panel: #232736;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --accent-primary: #8b5cf6;
-    --accent-hover: #7c3aed;
-    --border-color: #334155;
+    --bg-primary: #0a0a0a;    /* Deep CapCut Base */
+    --bg-secondary: #121212;  /* Sidebar Surfaces */
+    --bg-panel: #1e1e1e;      /* Interactive Sub-panels */
+    --text-primary: #ffffff;
+    --text-secondary: #a3a3a3; /* Muted for low eye strain */
+    --accent-primary: #149180; /* CapCut Teal */
+    --accent-hover: #14b8a6;
+    --border-color: #262626;  /* Minimalist Depth */
     
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
     
-    --shadow-premium: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(139, 92, 246, 0.1);
+    --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
 .hidden { display: none !important; }
@@ -58,17 +58,14 @@ body {
 }
 
 .studio-header {
-    height: 56px;
-    background-color: rgba(15, 17, 26, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.4);
+    height: 52px;
+    background-color: #000000;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 24px;
-    z-index: 10;
+    padding: 0 16px;
+    z-index: 50;
 }
 
 .logo {
@@ -85,7 +82,7 @@ body {
 
 .logo svg {
     color: var(--accent-primary);
-    filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.6));
+    filter: drop-shadow(0 0 8px rgba(45, 212, 191, 0.4));
 }
 
 .header-actions {
@@ -123,9 +120,9 @@ details.accordion {
 }
 
 details.accordion summary {
-    padding: 20px 24px;
+    padding: 16px 20px;
     font-weight: 700;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--text-secondary);
@@ -134,13 +131,14 @@ details.accordion summary {
     display: flex;
     align-items: center;
     gap: 12px;
-    background-color: rgba(255,255,255,0.01);
+    background-color: transparent;
     transition: all 0.2s;
+    border-top: 1px solid transparent;
 }
 
 details.accordion summary:hover {
-    background-color: rgba(255,255,255,0.04);
     color: var(--text-primary);
+    background-color: var(--bg-panel);
 }
 
 details.accordion summary::-webkit-details-marker {
@@ -330,13 +328,12 @@ details.accordion summary::-webkit-details-marker {
 
 /* Playback Controls */
 .playback-controls {
-    height: 70px;
-    background-color: rgba(26, 29, 39, 0.9);
-    backdrop-filter: blur(10px);
+    height: 64px;
+    background-color: #121212;
     border-top: 1px solid var(--border-color);
     display: flex;
     align-items: center;
-    padding: 0 24px;
+    padding: 0 20px;
     gap: 20px;
 }
 

@@ -52,9 +52,9 @@
 
 .toggle-btn.active {
     background-color: var(--accent-primary);
-    color: #fff;
+    color: #000;
     border-color: var(--accent-primary);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(45, 212, 191, 0.2);
 }
 
 /* Format specifics */
@@ -104,10 +104,10 @@
 
 /* Active Process Glows */
 .process-render.active {
-    background-color: rgba(139, 92, 246, 0.1);
+    background-color: rgba(45, 212, 191, 0.1);
     border-color: var(--accent-primary);
     color: var(--accent-primary);
-    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+    box-shadow: 0 4px 15px rgba(45, 212, 191, 0.15);
 }
 
 .process-record.active {
@@ -163,6 +163,6 @@
 
 .fps-btn.active {
     background-color: var(--accent-primary);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+    color: #000;
+    box-shadow: 0 2px 8px rgba(45, 212, 191, 0.3);
 }
