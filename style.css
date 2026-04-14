@@ -4,7 +4,7 @@
     --bg-panel: #1e1e1e;      /* Interactive Sub-panels */
     --text-primary: #ffffff;
     --text-secondary: #a3a3a3; /* Muted for low eye strain */
-    --accent-primary: #149180; /* CapCut Teal */
+    --accent-primary: #2dd4bf; /* CapCut Teal */
     --accent-hover: #14b8a6;
     --border-color: #262626;  /* Minimalist Depth */
     
@@ -300,11 +300,7 @@ details.accordion summary::-webkit-details-marker {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: var(--bg-primary);
-    background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
+    background-color: #282828; /* Photoshop Dark UI Gray */
     position: relative;
 }
 
