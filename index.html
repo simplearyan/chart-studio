@@ -40,15 +40,27 @@
             </div>
         </header>
 
-        <div class="studio-workspace">
-            <!-- Center View -->
-            <section class="canvas-panel">
-                <div id="canvas-container" class="canvas-container shadow-premium">
-                    <canvas id="main-canvas" width="1280" height="720"></canvas>
-                </div>
-            </section>
+        <main class="studio-content">
+            <!-- Left/Top Side: Visualization & Controls -->
+            <div class="canvas-area">
+                <section class="canvas-panel">
+                    <div id="canvas-container" class="canvas-container shadow-premium">
+                        <canvas id="main-canvas" width="1280" height="720"></canvas>
+                    </div>
+                </section>
 
-            <!-- Unified Right Panel -->
+                <footer class="playback-controls">
+                    <button id="btn-play" class="control-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    </button>
+                    <div class="timeline-scrubber">
+                        <input type="range" id="timeline-slider" min="0" max="100" value="0">
+                        <div class="time-display"><span id="time-current">0.0</span>s / <span id="time-total">5.0</span>s</div>
+                    </div>
+                </footer>
+            </div>
+
+            <!-- Right Sidebar: Properties & Exports -->
             <aside class="sidebar unified-sidebar">
                 
                 <details class="accordion" open>
@@ -161,19 +173,7 @@
                     </div>
                 </details>
             </aside>
-        </div>
-
-        <!-- Full Width Timeline Engine -->
-        <footer class="playback-controls">
-            <button id="btn-play" class="control-btn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </button>
-            <div class="timeline-scrubber">
-                <input type="range" id="timeline-slider" min="0" max="100" value="0">
-                <div class="time-display"><span id="time-current">0.0</span>s / <span id="time-total">5.0</span>s</div>
-            </div>
-        </footer>
-    </div>
+        </main>
 
     <!-- Export Overlay -->
     <div id="export-overlay" class="export-overlay hidden">

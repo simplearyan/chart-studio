@@ -50,6 +50,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    height: 100dvh;
 }
 
 .studio-header {
@@ -88,8 +89,15 @@ body {
     gap: 12px;
 }
 
-.studio-workspace {
+.studio-content {
     display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.canvas-area {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     overflow: hidden;
 }
@@ -444,22 +452,35 @@ input[type=range]::-webkit-slider-thumb {
 
 /* Responsive Overrides */
 @media (max-width: 1024px) {
-    .studio-workspace {
+    .studio-content {
         flex-direction: column;
-        overflow-y: auto;
+        overflow: hidden; /* Fix layout height */
     }
     
-    .unified-sidebar {
-        width: 100%;
-        border-left: none;
-        border-top: 1px solid var(--border-color);
+    .canvas-area {
+        flex: 0 0 auto;
+        min-height: 400px;
+        height: auto;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .canvas-panel {
+        flex: 1;
+        height: auto;
+        min-height: 300px;
+    }
+
+    .playback-controls {
+        height: 60px;
+        padding: 0 16px;
         flex-shrink: 0;
     }
     
-    .canvas-panel {
-        flex: none;
-        height: 50vh;
-        min-height: 350px;
+    .unified-sidebar {
+        flex: 1;
+        width: 100%;
+        border-left: none;
+        overflow-y: auto;
     }
     
     .canvas-container {
@@ -468,6 +489,10 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 @media (max-width: 768px) {
+    .canvas-area {
+        min-height: 320px;
+    }
+
     .studio-header {
         padding: 0 12px;
     }
@@ -482,5 +507,13 @@ input[type=range]::-webkit-slider-thumb {
     
     .logo {
         font-size: 1rem;
+    }
+
+    .playback-controls {
+        gap: 12px;
+    }
+
+    .timeline-scrubber {
+        gap: 12px;
     }
 }
