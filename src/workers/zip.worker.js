@@ -37,7 +37,7 @@ self.onmessage = async (e) => {
         else if (type === 'FINALIZE') {
             self.postMessage({ type: 'LOG', message: 'Generating ZIP archive...' });
             const content = await zip.generateAsync({ type: 'blob' });
-            self.postMessage({ type: 'COMPLETE', data: content }, [content]);
+            self.postMessage({ type: 'COMPLETE', data: content });
         }
     } catch (err) {
         self.postMessage({ type: 'ERROR', error: err.message });
