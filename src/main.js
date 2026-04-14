@@ -234,13 +234,15 @@ function bindEvents() {
         canvasSwatches.forEach(s => s.classList.remove('active'));
         swatch.classList.add('active');
         const color = swatch.dataset.color;
-        canvasPanel.style.backgroundColor = color;
+        engine.bgColor = color;
+        engine.render();
         canvasCustomPicker.value = color;
     }));
 
     canvasCustomPicker.addEventListener('input', (e) => {
         const color = e.target.value;
-        canvasPanel.style.backgroundColor = color;
+        engine.bgColor = color;
+        engine.render();
         canvasSwatches.forEach(s => s.classList.remove('active'));
     });
 

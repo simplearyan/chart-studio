@@ -10,6 +10,7 @@ export class Engine {
         
         // Export variables
         this.isExporting = false;
+        this.bgColor = '#000000'; // Default black
         
         this._bindEvents();
     }
@@ -31,7 +32,7 @@ export class Engine {
         if (this.bgTransparent) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         } else {
-            this.ctx.fillStyle = '#000000'; // Default black background
+            this.ctx.fillStyle = this.bgColor;
             this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         }
 
