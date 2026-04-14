@@ -28,8 +28,12 @@ export class Engine {
 
     render() {
         // Clear canvas
-        this.ctx.fillStyle = '#000000'; // Default black background
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        if (this.bgTransparent) {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        } else {
+            this.ctx.fillStyle = '#000000'; // Default black background
+            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        }
 
         // Normalize time (0 to 1)
         const progress = Math.min(Math.max(this.time / this.totalDuration, 0), 1);

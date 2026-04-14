@@ -157,8 +157,18 @@ function bindEvents() {
     });
 
     btnExportPng.addEventListener('click', async () => {
+        // Toggle engine to transparent, force a render tick
+        engine.bgTransparent = true;
+        engine.render();
+        
+        // Grab transparent image data
         const dataUrl = canvasEl.toDataURL('image/png');
-        nativeDownload(dataUrl, 'chart-export.png');
+        
+        // Restore default black environment instantly
+        engine.bgTransparent = false;
+        engine.render();
+        
+        nativeDownload(dataUrl, 'chart-snapshot-transparent.png');
     });
 
     // Export Toggles
