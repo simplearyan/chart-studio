@@ -99,6 +99,18 @@ function updateChart() {
 }
 
 function bindEvents() {
+    // Exclusive Accordion Management
+    const accordions = document.querySelectorAll('details.accordion');
+    accordions.forEach(target => {
+        target.addEventListener('toggle', () => {
+            if (target.open) {
+                accordions.forEach(other => {
+                    if (other !== target) other.open = false;
+                });
+            }
+        });
+    });
+
     btnUpdateData.addEventListener('click', () => {
         appState.data = dataInput.value;
         updateChart();
