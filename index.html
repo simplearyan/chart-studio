@@ -2,200 +2,252 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="description" content="Chart Studio Web - A high-performance, vanilla JavaScript timeline editor for producing, rendering, and actively recording beautiful statistical data animations in 60FPS." />
-    <meta name="keywords" content="Chart Studio, WebCodecs, Animation Editor, Video Exporter, MediaBunny, Data Visualization, Bar Chart Race" />
-    <meta name="author" content="Aryan - Kenichi Team" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Chart Studio Web - The future of data storytelling. Create, animate, and export high-performance 60FPS statistical data animations in your browser." />
+    <meta name="keywords" content="Data Visualization, Chart Generator, Video Exporter, Vox Style, Flourish Style, 60fps, WebCodecs" />
+    <meta name="author" content="Aryan - Chart Studio Team" />
     
-    <!-- Open Graph for SEO & Social Media -->
-    <meta property="og:title" content="Chart Studio Web - Advanced Video Exporter" />
-    <meta property="og:description" content="A powerful timeline editor with Canvas 2D engine powering dual MediaRecorder & WebCodec render pipelines." />
+    <!-- Open Graph / SEO -->
+    <meta property="og:title" content="Chart Studio Web: Professional Data Storytelling" />
+    <meta property="og:description" content="Generate newsroom-quality charts and video exports directly in your browser. No installation, zero data tracking." />
+    <meta property="og:image" content="./src/assets/og-preview.png" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://chart-studio.demo" />
 
-    <title>Chart Studio MVP Exporter</title>
-    <!-- Use Google Fonts -->
+    <title>Chart Studio | Professional Data Storytelling Hub</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Merriweather:wght@400;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./export-styles.css">
+    
+    <style>
+        :root {
+            --glow-color: rgba(45, 212, 191, 0.4);
+        }
+
+        .landing-page {
+            background: radial-gradient(circle at top right, #1a1a1a, #0a0a0a);
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto !important; /* Force scroll visibility */
+            display: block !important;    /* Override fixed flex layout if any */
+        }
+
+        .landing-layout {
+            height: auto !important;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-section {
+            padding: 120px 20px 60px;
+            text-align: center;
+            max-width: 900px;
+            z-index: 10;
+        }
+
+        .hero-section h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 800;
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fff 0%, #a3a3a3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 40px 20px;
+        }
+
+        .template-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+        }
+
+        .template-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--glow-color);
+        }
+
+        .card-preview {
+            aspect-ratio: 16/9;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .card-preview::after {
+            content: 'ENTER STUDIO';
+            position: absolute;
+            inset: 0;
+            background: rgba(45, 212, 191, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .template-card:hover .card-preview::after {
+            opacity: 1;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .card-body h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .card-body p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            padding: 80px 20px;
+            width: 100%;
+        }
+
+        .benefit-item {
+            text-align: center;
+        }
+
+        .benefit-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 20px;
+            color: var(--accent-primary);
+        }
+
+        .benefit-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .benefit-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .footer {
+            padding: 60px 20px;
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            .template-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-section h1 {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
   </head>
-  <body>
-    <div id="app" class="studio-layout">
-        <header class="studio-header">
+  <body class="landing-page">
+    <div id="app" class="studio-layout landing-layout">
+        <header class="studio-header w-full">
             <div class="logo">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
                 <span>Chart Studio</span>
             </div>
             <div class="header-actions">
-                <button id="btn-export-png" class="btn btn-secondary">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                    <span class="btn-text">Image</span>
-                </button>
-                <button id="btn-export-video" class="btn btn-primary">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    <span class="btn-text">Export Video</span>
-                </button>
+                <a href="https://github.com/simplearyan/chart-studio" class="btn btn-secondary">GitHub</a>
             </div>
         </header>
 
-        <main class="studio-content">
-            <!-- Left/Top Side: Visualization & Controls -->
-            <div class="canvas-area">
-                <section class="canvas-panel">
-                    <div id="canvas-container" class="canvas-container shadow-premium">
-                        <canvas id="main-canvas" width="1280" height="720"></canvas>
-                    </div>
-                </section>
-
-                <footer class="playback-controls">
-                    <button id="btn-play" class="control-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    </button>
-                    <div class="timeline-scrubber">
-                        <input type="range" id="timeline-slider" min="0" max="100" value="0">
-                        <div class="time-display"><span id="time-current">0.0</span>s / <span id="time-total">5.0</span>s</div>
-                    </div>
-                </footer>
-            </div>
-
-            <!-- Right Sidebar: Properties & Exports -->
-            <aside class="sidebar unified-sidebar">
-                
-                <details class="accordion" name="sidebar-group">
-                    <summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Data Structure</summary>
-                    <div class="accordion-content">
-                        <div class="control-group">
-                            <label>Chart Mode</label>
-                            <div class="chart-type-selector">
-                                <button class="type-btn active" data-type="bar">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg> Bar
-                                </button>
-                                <button class="type-btn" data-type="line">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg> Line
-                                </button>
-                                <button class="type-btn" data-type="race">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2Z"/><path d="M12 6v12"/><path d="M8 10v8"/><path d="M16 14v4"/></svg> Race
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label>JSON Source</label>
-                            <textarea id="data-input" class="code-editor">[
-    {"label": "Apple 🍎", "val": 10},
-    {"label": "Banana 🍌", "val": 20},
-    {"label": "Cat 😼", "val": 45},
-    {"label": "Dog 🐶", "val": 30}
-]</textarea>
-                            <button id="btn-update-data" class="btn btn-secondary w-full mt-2">Compile JSON</button>
-                        </div>
-                    </div>
-                </details>
-
-                <details class="accordion" name="sidebar-group">
-                    <summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="16"/></svg> Project Settings</summary>
-                    <div class="accordion-content">
-                        <div class="control-group">
-                            <label>Theme Palette</label>
-                            <div class="color-palette">
-                                <button class="palette-swatch active" style="background: linear-gradient(135deg, #a855f7, #6366f1)" data-palette="purple-indigo"></button>
-                                <button class="palette-swatch" style="background: linear-gradient(135deg, #ec4899, #f43f5e)" data-palette="pink-rose"></button>
-                                <button class="palette-swatch" style="background: linear-gradient(135deg, #10b981, #3b82f6)" data-palette="emerald-blue"></button>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label for="conf-duration">Duration Offset (s)</label>
-                            <input type="number" id="conf-duration" value="5" min="1" max="60" class="input-field">
-                        </div>
-
-                        <div class="control-group">
-                            <label for="conf-easing">Engine Easing</label>
-                            <select id="conf-easing" class="select-field">
-                                <option value="easeInOutCubic">Ease In Out</option>
-                                <option value="easeOutElastic">Elastic Out</option>
-                                <option value="easeOutBounce">Bounce</option>
-                            </select>
-                        </div>
-                    </div>
-                </details>
-
-                <details class="accordion" name="sidebar-group">
-                    <summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Output Protocol</summary>
-                    <div class="accordion-content">
-                        <div class="control-group">
-                            <label class="font-bold text-xs">CONTAINER FORMAT</label>
-                            <div class="format-grid">
-                                <button class="toggle-btn format-btn active" data-value="mp4">MP4</button>
-                                <button class="toggle-btn format-btn" data-value="webm">WEBM</button>
-                                <button class="toggle-btn format-btn" data-value="mov">MOV</button>
-                                <button class="toggle-btn format-btn" data-value="png_sequence">PNG SEQ</button>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="font-bold text-xs">WORKER PIPELINE</label>
-                            <div class="process-grid">
-                                <button class="toggle-btn process-btn process-render active" data-value="render">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                                    <div class="process-title">Render Layer</div>
-                                    <div class="process-subtitle">High Quality • All Formats</div>
-                                </button>
-                                <button class="toggle-btn process-btn process-record" data-value="record">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-                                    <div class="process-title">Live Native</div>
-                                    <div class="process-subtitle">Realtime • MP4/WEBM Only</div>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="control-group mt-2">
-                            <label class="font-bold text-xs">CAPTURE RATE (FPS)</label>
-                            <div class="fps-grid">
-                                <button class="toggle-btn fps-btn" data-value="12">12</button>
-                                <button class="toggle-btn fps-btn" data-value="24">24</button>
-                                <button class="toggle-btn fps-btn" data-value="30">30</button>
-                                <button class="toggle-btn fps-btn active" data-value="60">60</button>
-                            </div>
-                        </div>
-                    </div>
-                </details>
-
-                <details class="accordion" name="sidebar-group">
-                    <summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><circle cx="12" cy="12" r="3"/></svg> Canvas Settings</summary>
-                    <div class="accordion-content">
-                        <div class="control-group">
-                            <label class="font-bold text-xs uppercase tracking-wider opacity-60">Canvas Background</label>
-                            <div class="color-palette mt-2" id="canvas-color-palette">
-                                <div class="palette-swatch active" style="background-color: #000000;" data-color="#000000" title="Black"></div>
-                                <div class="palette-swatch" style="background-color: #334155;" data-color="#334155" title="Slate"></div>
-                                <div class="palette-swatch" style="background-color: #282828;" data-color="#282828" title="Grey"></div>
-                                <div class="palette-swatch" style="background-color: #064e3b;" data-color="#064e3b" title="Green"></div>
-                                <div class="palette-swatch" style="background-color: #172554;" data-color="#172554" title="Blue"></div>
-                                <div class="palette-swatch" style="background-color: #422006;" data-color="#422006" title="Yellow"></div>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="font-bold text-xs uppercase tracking-wider opacity-60">Custom Canvas Color</label>
-                            <input type="color" id="canvas-custom-color" class="w-full h-10 bg-transparent border-none cursor-pointer mt-2" value="#000000">
-                        </div>
-                    </div>
-            </aside>
+        <main class="hero-section">
+            <h1>Data Storytelling<br>at 60FPS.</h1>
+            <p class="tagline">Generate newsroom-quality animations and professional video exports directly in your browser. High-performance, zero tracking, total creative control.</p>
         </main>
 
-    <!-- Export Overlay -->
-    <div id="export-overlay" class="export-overlay hidden">
-        <div class="export-modal glass-panel">
-            <h2>Rendering Video...</h2>
-            <div class="progress-bar-container">
-                <div id="export-progress-bar" class="progress-bar"></div>
-            </div>
-            <p id="export-status">Preparing frames...</p>
-        </div>
-    </div>
+        <section class="template-grid">
+            <a href="standard-studio.html" class="template-card">
+                <div class="card-preview" style="background-image: url('standard_thumbnail.png');"></div>
+                <div class="card-body">
+                    <h3>Standard Studio</h3>
+                    <p>The clean, high-performance editor for rapid data animation. Perfect for dashboards and functional reporting.</p>
+                </div>
+            </a>
 
-    <script type="module" src="/src/main.js"></script>
+            <a href="editorial.html" class="template-card">
+                <div class="card-preview" style="background-image: url('editorial_thumbnail.png');"></div>
+                <div class="card-body">
+                    <h3>Editorial Studio</h3>
+                    <p>Journalist-grade visualizations inspired by Vox and Flourish. Bold typography, storytelling layouts, and high-fidelity presets.</p>
+                </div>
+            </a>
+        </section>
+
+        <section class="benefits-grid">
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                </div>
+                <h4>WebCodecs Export</h4>
+                <p>Guaranteed frame rates and ultra-fast rendering using low-level browser video processing API.</p>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h4>Private by Design</h4>
+                <p>Your data never leaves your machine. All rendering is performed locally in your browser.</p>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <h4>Always 60FPS</h4>
+                <p>Designed for smooth, buttery transitions and cinematic statistical animations that wow your audience.</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2026 Chart Studio. Crafted for Data Storytellers.</p>
+        </footer>
+    </div>
   </body>
 </html>

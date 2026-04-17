@@ -7,6 +7,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
+        standard: resolve(__dirname, 'standard-studio.html'),
         editorial: resolve(__dirname, 'editorial.html'),
       },
     },
