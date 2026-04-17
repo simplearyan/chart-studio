@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chart Templates | Visual Preset Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/styles/templates.css">
+    <link rel="stylesheet" href="./src/styles/main.css"> <!-- for nav/header consistency -->
+  </head>
+  <body class="templates-page">
+    <header class="gallery-header">
+        <div class="gallery-nav" style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 700; color: #000;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>Landing</span>
+            </a>
+            <h1>Choose a Template</h1>
+            <div style="width: 80px;"></div> <!-- Spacer for centering -->
+        </div>
+        <p>Select a blueprint to start your data story.</p>
+    </header>
+
+    <main class="gallery-container">
+        
+        <!-- Category: Newsroom Presets -->
+        <section class="category-section">
+            <h2 class="category-title">Editorial Presets (Vox Style)</h2>
+            <div class="template-grid">
+                
+                <a href="editorial.html?preset=vox-bar" class="template-card">
+                    <div class="template-visual">
+                        <span class="badge-premium">VOX STYLE</span>
+                        <img src="./src/assets/editorial_thumbnail.png" alt="Vox Bar Chart">
+                    </div>
+                    <div class="template-info">
+                        <h3>Animated Headline Bar</h3>
+                        <p>High-contrast, bold typography with the signature Vox accent and metadata layer.</p>
+                        <span class="template-tag">Bar Chart</span>
+                    </div>
+                </a>
+
+                <a href="editorial.html?preset=editorial-area" class="template-card">
+                    <div class="template-visual">
+                        <span class="badge-premium">EDITORIAL</span>
+                        <img src="./src/assets/editorial_thumbnail.png" alt="Editorial Area" style="filter: hue-rotate(45deg);">
+                    </div>
+                    <div class="template-info">
+                        <h3>Storytelling Area Chart</h3>
+                        <p>Smooth gradients and elegant area fills for tracking growth and momentum.</p>
+                        <span class="template-tag">Area Chart</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Category: Interactive Racing -->
+        <section class="category-section">
+            <h2 class="category-title">Movement & Racing</h2>
+            <div class="template-grid">
+                
+                <a href="editorial.html?preset=flourish-line-race" class="template-card">
+                    <div class="template-visual">
+                        <span class="badge-premium" style="background: #3b82f6; color: #fff;">FLOURISH</span>
+                        <img src="./src/assets/editorial_thumbnail.png" alt="Line Race" style="filter: invert(1);">
+                    </div>
+                    <div class="template-info">
+                        <h3>Multi-series Line Race</h3>
+                        <p>Track multiple entities racing over time with leading edge labels and smooth path trailing.</p>
+                        <span class="template-tag">Line Race</span>
+                    </div>
+                </a>
+
+                <a href="standard-studio.html?preset=standard-bar-race" class="template-card">
+                    <div class="template-visual">
+                        <img src="./src/assets/standard_thumbnail.png" alt="Bar Race">
+                    </div>
+                    <div class="template-info">
+                        <h3>Competitive Bar Race</h3>
+                        <p>Dynamic ranking shifts and horizontal animations for competitive statistical data.</p>
+                        <span class="template-tag">Bar Race</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Category: Standard Graphics -->
+        <section class="category-section">
+            <h2 class="category-title">Standard Visuals</h2>
+            <div class="template-grid">
+                
+                <a href="standard-studio.html?type=bar" class="template-card">
+                    <div class="template-visual">
+                        <img src="./src/assets/standard_thumbnail.png" alt="Standard Bar" style="filter: saturate(0.5);">
+                    </div>
+                    <div class="template-info">
+                        <h3>Rapid Bar Animation</h3>
+                        <p>Quick, clean animations for modern reporting. Perfect for simple categorical data.</p>
+                        <span class="template-tag">Bar Chart</span>
+                    </div>
+                </a>
+
+                <a href="standard-studio.html?type=line" class="template-card">
+                    <div class="template-visual">
+                        <img src="./src/assets/standard_thumbnail.png" alt="Standard Line" style="filter: hue-rotate(280deg);">
+                    </div>
+                    <div class="template-info">
+                        <h3>Minimalist Trend Line</h3>
+                        <p>Focus on the trajectory with clean axes and high-performance rendering.</p>
+                        <span class="template-tag">Line Chart</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer style="text-align: center; padding: 4rem 0; color: var(--gallery-muted); border-top: 1px solid var(--gallery-border);">
+        <p>&copy; 2026 Chart Studio Hub. All presets powered by WebCodecs.</p>
+    </footer>
+  </body>
+</html>

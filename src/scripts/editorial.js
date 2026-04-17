@@ -72,13 +72,45 @@ const exportOverlay = document.getElementById('export-overlay');
 const exportProgressBar = document.getElementById('export-progress-bar');
 const exportStatus = document.getElementById('export-status');
 
-function init() {
+async function init() {
     engine = new Engine(canvasEl);
     chartObj = new ChartObject();
     engine.add(chartObj);
 
-    // Initial Data
-    appState.data = dataInput.value;
+    // Initial Data & Template Handling
+    const params = new URLSearchParams(window.location.search);
+    const presetId = params.get('preset');
+
+    if (presetId) {
+        try {
+            const response = await fetch('./src/assets/presets.json');
+            const presets = await response.json();
+            const config = presets[presetId];
+            
+            if (config) {
+                appState.chartType = config.type || appState.chartType;
+                appState.theme = config.theme || appState.theme;
+                appState.data = JSON.stringify(config.data, null, 2);
+                appState.metadata = { ...appState.metadata, ...config.metadata };
+                
+                // Update UI elements
+                dataInput.value = appState.data;
+                inputHeadline.value = appState.metadata.headline;
+                inputSubheadline.value = appState.metadata.subheadline;
+                inputSource.value = appState.metadata.source;
+                
+                // Update Active Buttons
+                typeBtns.forEach(b => b.classList.toggle('active', b.dataset.type === appState.chartType));
+                themeBtns.forEach(b => b.classList.toggle('active', b.dataset.theme === appState.theme));
+            }
+        } catch (e) {
+            console.warn("Preset load failed, falling back to defaults", e);
+            appState.data = dataInput.value;
+        }
+    } else {
+        appState.data = dataInput.value;
+    }
+
     updateChart();
 
     bindEvents();

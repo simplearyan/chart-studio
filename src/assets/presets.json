@@ -1,0 +1,63 @@
+{
+  "vox-bar": {
+    "type": "bar",
+    "theme": "vox",
+    "data": [
+      {"label": "2019", "val": 120},
+      {"label": "2020", "val": 450},
+      {"label": "2021", "val": 320},
+      {"label": "2022", "val": 680},
+      {"label": "2023", "val": 940}
+    ],
+    "metadata": {
+      "headline": "Digital Growth 2023",
+      "subheadline": "Visualizing the rapid expansion of global internet traffic.",
+      "source": "Source: Network Analysis Hub"
+    }
+  },
+  "flourish-line-race": {
+    "type": "line-race",
+    "theme": "flourish",
+    "data": [
+      {"label": "BTC", "values": [10, 25, 45, 30, 60, 85, 90]},
+      {"label": "ETH", "values": [5, 15, 30, 25, 45, 55, 65]},
+      {"label": "ADA", "values": [2, 10, 15, 12, 20, 30, 42]}
+    ],
+    "metadata": {
+      "headline": "Crypto Market Race",
+      "subheadline": "Tracking the relative performance of top assets over 7 days.",
+      "source": "Source: Crypto Analytics"
+    }
+  },
+  "standard-bar-race": {
+    "type": "race",
+    "theme": "default",
+    "data": [
+      {"label": "Node.js", "val": 850},
+      {"label": "Python", "val": 720},
+      {"label": "Go", "val": 440},
+      {"label": "Rust", "val": 310},
+      {"label": "Java", "val": 620}
+    ],
+    "metadata": {
+      "headline": "Developer Trends",
+      "subheadline": "The most popular languages in 2024 modern backends.",
+      "source": "Source: Dev Survey"
+    }
+  },
+  "editorial-area": {
+    "type": "area",
+    "theme": "vox",
+    "data": [
+      {"label": "Q1", "val": 10},
+      {"label": "Q2", "val": 25},
+      {"label": "Q3", "val": 35},
+      {"label": "Q4", "val": 80}
+    ],
+    "metadata": {
+      "headline": "Revenue Surge",
+      "subheadline": "End of year performance reached record highs.",
+      "source": "Source: Finance Board"
+    }
+  }
+}

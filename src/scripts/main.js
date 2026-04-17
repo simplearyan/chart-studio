@@ -64,7 +64,7 @@ let exportState = {
     fps: 60
 };
 
-function init() {
+async function init() {
     engine = new Engine(canvasEl);
     chartObj = new ChartObject();
     engine.add(chartObj);
@@ -73,8 +73,40 @@ function init() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Initial Data
-    appState.data = dataInput.value;
+    // Initial Data & Template Handling
+    const params = new URLSearchParams(window.location.search);
+    const presetId = params.get('preset');
+
+    if (presetId) {
+        try {
+            const response = await fetch('./src/assets/presets.json');
+            const presets = await response.json();
+            const config = presets[presetId];
+            
+            if (config) {
+                appState.chartType = config.type || appState.chartType;
+                appState.data = JSON.stringify(config.data, null, 2);
+                
+                // Update UI elements
+                dataInput.value = appState.data;
+                
+                // Update Active Buttons
+                typeBtns.forEach(b => b.classList.toggle('active', b.dataset.type === appState.chartType));
+            }
+        } catch (e) {
+            console.warn("Preset load failed, falling back to defaults", e);
+            appState.data = dataInput.value;
+        }
+    } else {
+        // Fallback for simple 'type' param
+        const typeParam = params.get('type');
+        if (typeParam) {
+            appState.chartType = typeParam;
+            typeBtns.forEach(b => b.classList.toggle('active', b.dataset.type === typeParam));
+        }
+        appState.data = dataInput.value;
+    }
+
     updateChart();
 
     bindEvents();
