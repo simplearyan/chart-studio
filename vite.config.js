@@ -1,6 +1,15 @@
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig({
-  // Required for GitHub Pages deployment. It maps assets to /chart-studio/ instead of /
-  base: '/chart-studio/'
+  base: '/chart-studio/',
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        editorial: resolve(__dirname, 'editorial.html'),
+      },
+    },
+  },
 });
+
