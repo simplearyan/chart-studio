@@ -1,5 +1,5 @@
-import { Engine } from './engine/Core.js';
-import { ChartObject } from './engine/ChartObject.js';
+import { Engine } from '../engine/Core.js';
+import { ChartObject } from '../engine/ChartObject.js';
 
 function nativeDownload(url, filename) {
     const a = document.createElement("a");
@@ -11,8 +11,8 @@ function nativeDownload(url, filename) {
 }
 
 // We use ?worker to let Vite know this is a Web Worker
-import MediaWorker from './workers/mediabunny.worker.js?worker';
-import ZipWorker from './workers/zip.worker.js?worker';
+import MediaWorker from '../workers/mediabunny.worker.js?worker';
+import ZipWorker from '../workers/zip.worker.js?worker';
 
 const appState = {
     chartType: 'bar',

@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&family=Roboto+Serif:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./export-styles.css">
+    <link rel="stylesheet" href="./src/styles/main.css">
+    <link rel="stylesheet" id="export-styles" href="./src/styles/export.css">
     <style>
         :root {
             --vox-yellow: #FFCC00;
@@ -104,11 +104,27 @@
                         </div>
 
                         <div class="control-group">
+                            <label>Design Customization</label>
+                            <div class="property-grid">
+                                <input type="color" id="conf-bg-color" value="#0a0a0a" title="Background Color">
+                                <input type="color" id="conf-text-color" value="#ffffff" title="Text Color">
+                            </div>
+                            <div class="control-group mt-2">
+                                <label><input type="checkbox" id="conf-smoothing" checked> Line Smoothing</label>
+                            </div>
+                            <div class="control-group mt-2">
+                                <label>Line Thickness</label>
+                                <input type="range" id="conf-line-width" min="1" max="12" value="4" class="input-field">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
                             <label>Chart Mode</label>
                             <div class="property-grid">
                                 <button class="type-btn active" data-type="bar">Bar</button>
                                 <button class="type-btn" data-type="line">Line</button>
                                 <button class="type-btn" data-type="race">Race</button>
+                                <button class="type-btn" data-type="line-race">Line Race</button>
                                 <button class="type-btn" data-type="area">Area</button>
                             </div>
                         </div>
@@ -138,11 +154,9 @@
                     <div class="accordion-content">
                         <div class="control-group">
                             <textarea id="data-input" class="code-editor">[
-    {"label": "2020", "val": 120},
-    {"label": "2021", "val": 450},
-    {"label": "2022", "val": 320},
-    {"label": "2023", "val": 680},
-    {"label": "2024", "val": 940}
+  {"label": "BTC", "values": [10, 25, 45, 30, 60, 85, 90]},
+  {"label": "ETH", "values": [5, 15, 30, 25, 45, 55, 65]},
+  {"label": "ADA", "values": [2, 10, 15, 12, 20, 30, 42]}
 ]</textarea>
                             <button id="btn-update-data" class="btn btn-secondary w-full mt-2">Update Visuals</button>
                         </div>
@@ -182,6 +196,6 @@
         </div>
     </div>
 
-    <script type="module" src="/src/editorial-main.js"></script>
+    <script type="module" src="./src/scripts/editorial.js"></script>
   </body>
 </html>

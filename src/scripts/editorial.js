@@ -1,9 +1,9 @@
-import { Engine } from './engine/Core.js';
-import { ChartObject } from './engine/ChartObject.js';
+import { Engine } from '../engine/Core.js';
+import { ChartObject } from '../engine/ChartObject.js';
 
 // We use ?worker to let Vite know this is a Web Worker
-import MediaWorker from './workers/mediabunny.worker.js?worker';
-import ZipWorker from './workers/zip.worker.js?worker';
+import MediaWorker from '../workers/mediabunny.worker.js?worker';
+import ZipWorker from '../workers/zip.worker.js?worker';
 
 function nativeDownload(url, filename) {
     const a = document.createElement("a");
@@ -24,6 +24,12 @@ const appState = {
         headline: '',
         subheadline: '',
         source: ''
+    },
+    styles: {
+        bgColor: '#0a0a0a',
+        textColor: '#ffffff',
+        smoothing: true,
+        lineWidth: 4
     }
 };
 
@@ -52,6 +58,12 @@ const confFps = document.getElementById('conf-fps');
 const inputHeadline = document.getElementById('meta-headline');
 const inputSubheadline = document.getElementById('meta-subheadline');
 const inputSource = document.getElementById('meta-source');
+
+// Design Customization Inputs
+const confBgColor = document.getElementById('conf-bg-color');
+const confTextColor = document.getElementById('conf-text-color');
+const confSmoothing = document.getElementById('conf-smoothing');
+const confLineWidth = document.getElementById('conf-line-width');
 
 // Export
 const btnExportPng = document.getElementById('btn-export-png');
@@ -83,6 +95,7 @@ function updateChart() {
     chartObj.setData(appState.data, appState.chartType);
     chartObj.setTheme(appState.theme);
     chartObj.setMetadata(appState.metadata);
+    chartObj.setCustomStyles(appState.styles);
     chartObj.setEasing(appState.easing);
     
     engine.totalDuration = appState.duration * 1000;
@@ -137,6 +150,24 @@ function bindEvents() {
     confDuration.addEventListener('change', (e) => {
         appState.duration = Number(e.target.value);
         updateChart();
+    });
+
+    // Customization Event Listeners
+    if (confBgColor) confBgColor.addEventListener('input', (e) => {
+        appState.styles.bgColor = e.target.value;
+        chartObj.setCustomStyles(appState.styles);
+    });
+    if (confTextColor) confTextColor.addEventListener('input', (e) => {
+        appState.styles.textColor = e.target.value;
+        chartObj.setCustomStyles(appState.styles);
+    });
+    if (confSmoothing) confSmoothing.addEventListener('change', (e) => {
+        appState.styles.smoothing = e.target.checked;
+        chartObj.setCustomStyles(appState.styles);
+    });
+    if (confLineWidth) confLineWidth.addEventListener('input', (e) => {
+        appState.styles.lineWidth = Number(e.target.value);
+        chartObj.setCustomStyles(appState.styles);
     });
 
     btnPlay.addEventListener('click', () => {
